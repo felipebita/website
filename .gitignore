@@ -4,3 +4,7 @@
 # OS cruft
 .DS_Store
 Thumbs.db
+
+# never publish source documents (contain RG / date of birth)
+*.pdf
+!Felipe-Bitencourt-Martins-CV-2026.pdf
