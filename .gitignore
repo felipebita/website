@@ -1,0 +1,6 @@
+# WSL "downloaded from the internet" marker files
+*:Zone.Identifier
+
+# OS cruft
+.DS_Store
+Thumbs.db
