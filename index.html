@@ -168,6 +168,12 @@ h2.head{font-family:"Panel",Arial Narrow,sans-serif; font-weight:700; font-size:
 .thesis-row .thesis{margin-top:0; max-width:44ch}
 .spec{min-width:0}
 .speclist{margin:11px 0 0; padding:0; list-style:none; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:5px}
+/* Medical Staffing carries eleven skills, which makes a sixth row in the default
+   two-column block and pushes the slide past the fold. A wider three-column
+   variant takes it back to four rows; cells stay wide enough for the longest
+   label without wrapping. */
+.thesis-row.wide{grid-template-columns:minmax(0,1fr) clamp(260px,44vw,600px)}
+.thesis-row.wide .speclist{grid-template-columns:repeat(3,minmax(0,1fr))}
 .speclist li{font-family:"Panel",Arial Narrow,sans-serif; text-transform:uppercase; letter-spacing:.07em; font-size:13.5px; font-weight:700; color:var(--ink-2); background:var(--surface); border-left:3px solid var(--cat); padding:6px 12px}
 
 /* ============ LAYERS ============ */
@@ -269,6 +275,106 @@ h2.head{font-family:"Panel",Arial Narrow,sans-serif; font-weight:700; font-size:
 .gcard{background:var(--surface); box-shadow:0 0 0 1px var(--line); padding:18px; display:flex; flex-direction:column; gap:9px; min-height:150px}
 .gcard h4{font-family:"Panel",Arial Narrow,sans-serif; font-size:18px; margin:0; line-height:1.16}
 .gcard .yr{font-family:"Coord",monospace; font-size:11.5px; color:var(--ink-3)}
+
+/* ---- portfolio & talks ----
+   Nine projects plus six talks are too many for boxed cards, which at this count
+   read as a link farm. A ruled list is denser and calmer, and it lets the result
+   line carry the weight: for these projects the numbers persuade, not the prose.
+   Cards stay neutral on purpose -- the four category colours mean something
+   specific on the rail, and spending them as decoration here would dilute that. */
+.pfgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(14px,2.2vw,38px);
+  margin-top:clamp(10px,1.8vh,20px); align-items:start; flex:1 1 auto; align-content:start}
+.pfcol h4{margin:0 0 4px; padding-bottom:6px; border-bottom:1px solid var(--line);
+  font-family:"Panel",Arial Narrow,sans-serif; text-transform:uppercase; letter-spacing:.1em;
+  font-size:11.5px; color:var(--ink-3)}
+.pf{padding:8px 0 8px; border-bottom:1px solid var(--line-2)}
+.pf:last-child{border-bottom:0}
+.pf .yr{font-family:"Coord",monospace; font-size:11px; color:var(--ink-3)}
+.pf h5{font-family:"Panel",Arial Narrow,sans-serif; font-weight:700; font-size:15.5px;
+  line-height:1.16; margin:1px 0 3px}
+.pf h5 a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line)}
+.pf h5 a:hover{color:var(--accent); border-color:var(--accent)}
+.pf p{margin:0 0 4px; font-size:12.5px; line-height:1.38; color:var(--ink-2)}
+.pf .lnks{font-family:"Coord",monospace; font-size:11px; display:flex; flex-wrap:wrap; gap:3px 12px; margin-top:4px}
+.pf .lnks a{color:var(--accent); text-decoration:none; display:inline-flex; align-items:baseline; gap:4px}
+.pf .lnks a:hover{color:var(--ink)}
+.pf .lnks .g{font-size:10px}
+.pf .tag{font-family:"Coord",monospace; font-size:10px; color:var(--ink-3); border:1px solid var(--line); padding:0 4px; margin-left:5px}
+@media (max-width:900px){ .pfgrid{grid-template-columns:1fr} }
+
+/* ---- certificates ----
+   Forty-two entries. Nobody reads forty-two titles, so the job here is to show the
+   shape of the learning and let anyone verify a specific one. Each entry is a
+   single tabular row -- year in a fixed monospace column, title as the link,
+   provider and hours trailing in muted mono -- grouped by theme so the columns
+   are scannable rather than exhaustive. */
+.certgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(12px,1.8vw,30px);
+  margin-top:clamp(6px,1.2vh,14px); align-content:start; flex:1 1 auto}
+.certcol{display:flex; flex-direction:column; min-width:0}
+.certgrp+.certgrp{margin-top:13px}
+.certgrp h4{margin:0 0 3px; padding-bottom:5px; border-bottom:1px solid var(--line);
+  font-family:"Panel",Arial Narrow,sans-serif; text-transform:uppercase; letter-spacing:.1em;
+  font-size:10.5px; color:var(--ink-3); display:flex; justify-content:space-between; gap:8px}
+.certgrp h4 b{font-weight:700; color:var(--ink-3); font-family:"Coord",monospace; letter-spacing:0}
+/* the type must be set on the row itself: a bare grid cell inherits the body
+   line-height, so a single-line title still reserves a full body line box. */
+.cert{display:grid; grid-template-columns:24px minmax(0,1fr) auto; gap:0 7px; padding:2px 0;
+  align-items:baseline; font-size:11.3px; line-height:1.3}
+.cert .cy{font-family:"Coord",monospace; font-size:10px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+.cert a{font-size:11.3px; line-height:1.26; color:var(--ink); text-decoration:none;
+  border-bottom:1px solid var(--line-2)}
+.cert a:hover{color:var(--accent); border-color:var(--accent)}
+.cert .nl{font-size:11.3px; line-height:1.26; color:var(--ink)}
+.cert .cp{font-family:"Coord",monospace; font-size:9px; color:var(--ink-3); white-space:nowrap}
+@media (max-width:900px){ .certgrid{grid-template-columns:1fr} }
+
+/* ---- toolkit timeline ----
+   A chip list would be the fourth time these names appear in the deck, and the
+   only one without evidence attached. Plotting them on the rail's own axis adds
+   what the skills columns cannot: how long, how recently, and across which kinds
+   of work -- each bar segmented by the same four categories the timeline uses.
+   Spans are derived from the roles that claim each tool, so gaps are real. */
+.tk{--lab:154px; --dur:44px; display:flex; flex-direction:column; flex:1 1 auto;
+  margin-top:clamp(6px,1.2vh,14px)}
+.tkrow{display:grid; grid-template-columns:var(--lab) minmax(0,1fr) var(--dur); gap:0 13px; align-items:center}
+.tkaxis{position:relative; height:19px; border-bottom:1px solid var(--line)}
+.tkm{position:absolute; bottom:0; width:1px; height:5px; background:var(--line)}
+.tkt{position:absolute; top:3px; transform:translateX(-50%); font-family:"Coord",monospace;
+  font-size:9.5px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+.tkgrp{font-family:"Panel",Arial Narrow,sans-serif; text-transform:uppercase; letter-spacing:.1em;
+  font-size:10px; color:var(--ink-3); margin:6px 0 3px}
+.tkitem{height:20px}
+.tkn{font-family:"Panel",Arial Narrow,sans-serif; font-size:12.5px; font-weight:700;
+  color:var(--ink); text-align:right; line-height:1.1}
+.tktrack{position:relative; height:20px}
+.tktrack::before{content:""; position:absolute; left:0; right:0; top:9px; height:1px; background:var(--line-2)}
+.tkbar{position:absolute; top:4px; height:11px}
+.tkbar[data-cat="research"]{background:var(--cat-research)}
+.tkbar[data-cat="ai"]{background:var(--cat-ai)}
+.tkbar[data-cat="market"]{background:var(--cat-market)}
+.tkbar[data-cat="health"]{background:var(--cat-health)}
+/* the current-marker gets its own fixed slot, otherwise it sits inside the
+   right-aligned cell and shunts every duration that carries it out of line. */
+.tkd{font-family:"Coord",monospace; font-size:10px; color:var(--ink-3);
+  font-variant-numeric:tabular-nums; display:grid; grid-template-columns:1fr 7px; align-items:baseline}
+.tkd .v{text-align:right}
+.tkd .c{text-align:right}
+/* study ticks: a course is a point in time, a role is a span, so they get
+   different mark types and need no explanation. The ground-coloured ring keeps
+   a tick legible whether it sits on bare track or crosses a bar. */
+.tkc{position:absolute; top:2px; width:3px; height:16px; background:var(--ink-3);
+  box-shadow:0 0 0 1px var(--ground); transform:translateX(-1.5px)}
+.tkleg i.certmark{width:3px; height:11px; box-shadow:0 0 0 1px var(--ground)}
+/* When synced, the chart borrows the rail's exact x-axis so the two timelines
+   read as one coordinate system. The track is pinned to the rail axis width and
+   the chart is allowed to hang left of the 1200px text measure to make room for
+   the labels; the header above it stays on the normal measure. */
+.tk.is-synced .tkrow{grid-template-columns:var(--lab) var(--trk) var(--dur) minmax(0,1fr)}
+.tkleg{display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:8px; padding-top:7px;
+  border-top:1px solid var(--line-2); font-family:"Coord",monospace; font-size:10px; color:var(--ink-3)}
+.tkleg span{display:inline-flex; align-items:center; gap:6px}
+.tkleg i{width:16px; height:9px; display:inline-block}
+@media (max-width:900px){ .tk{--lab:96px} .tkn{font-size:11px} }
 .kitgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:22px 30px; margin-top:clamp(14px,2.4vh,26px)}
 .kitcol h4{margin:0 0 9px; padding-bottom:6px; border-bottom:1px solid var(--line); font-family:"Panel",Arial Narrow,sans-serif; text-transform:uppercase; letter-spacing:.1em; font-size:11.5px; color:var(--ink-3)}
 
@@ -433,8 +539,7 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
         <details class="layer"><summary><span class="num">3</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul>
           <li>Delivered insights that advanced sugarcane genomics.</li>
           <li>Applications in agricultural research and development.</li>
-          <li>First project where data was the instrument, not the subject.</li>
-        </ul></div></details>
+                  </ul></div></details>
       </div>
     </div>
   </section>
@@ -490,7 +595,7 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
       <h2 class="head">Genomic Prediction &amp; Gene Networks</h2>
       <p class="org">Doctorate, phase II &middot; LAGM, UNICAMP</p>
       <div class="thesis-row">
-        <p class="thesis">Predicting how much a grass will yield from its genome — then cutting 99% of the variables without losing accuracy.</p>
+        <p class="thesis">Predicting how much a grass will yield from its genome with machine learning — then exploring the discovered associated genes.</p>
         <div class="spec">
           <div class="lab">Skills developed</div>
           <ul class="speclist">
@@ -507,9 +612,10 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
       </div>
       <div class="layers">
         <details class="layer"><summary><span class="num">1</span>The work<span class="grow"></span></summary><div class="layer-in"><ul>
-          <li>Ran an extensive assessment of methods for predicting <b>growth and biomass production</b> in <i>Urochloa ruziziensis</i>, benchmarking conventional statistics against machine learning instead of assuming either would win.</li>
+          <li>Ran an extensive assessment of methods for predicting <b>growth and biomass production</b> in <i>Urochloa ruziziensis</i>, benchmarking conventional statistics against machine learning.</li>
           <li>Predicted five agronomic traits &mdash; <b>green matter, dry matter, stem and leaf dry matter, and regrowth</b> &mdash; across 33 clippings spanning wet and dry seasons.</li>
-          <li>Compared <b>Bayesian Ridge Regression and RKHS</b> against <b>SVM, Random Forest, AdaBoost and a multilayer perceptron</b>, scored on Pearson correlation and MSE under 5-fold cross-validation repeated 100 times.</li>
+          <li>Scored every model on <b>Pearson correlation and MSE</b> under <b>5-fold cross-validation repeated 100 times</b>.</li>
+          <li>Went past prediction into the biology: identified the genes associated with the selected markers and modelled how they interact as a <b>co-expression network</b>.</li>
         </ul></div></details>
         <details class="layer"><summary><span class="num">2</span>How I worked<span class="grow"></span></summary><div class="layer-in"><ul>
           <li>Phenotyped <b>1,000 plants across 50 half-sibling families</b>, then bulked DNA per family so a thousand samples became fifty sequencing libraries.</li>
@@ -535,76 +641,219 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
 
   <section class="slide" data-kind="pos" data-cat="ai" data-start="2022.95" data-end="2023.9" data-org="Freelance" data-title="Freelance">
     <div class="slide-in">
-      <div class="meta"><span class="coord">2022 — 2023</span><span class="chip">Applied AI</span></div>
+      <div class="meta"><span class="coord">Dec 2022 &mdash; Nov 2023</span><span class="chip">Applied AI</span></div>
       <h2 class="head">AI Lawyer Assistant &amp; Invoice Extraction</h2>
       <p class="org">Freelance &middot; Campinas, Brazil</p>
-      <p class="thesis"><span class="ph">The one sentence you say out loud.</span></p>
+      <div class="thesis-row">
+        <p class="thesis">Two production systems &mdash; one that made Brazilian jurisprudence searchable by meaning, one that read a hundred invoices a day and handed back six hours of it.</p>
+        <div class="spec">
+          <div class="lab">Skills developed</div>
+          <ul class="speclist">
+            <li>Python</li>
+            <li>Web Scraping</li>
+            <li>Airflow</li>
+            <li>LangChain</li>
+            <li>LLMs</li>
+            <li>Vector Databases</li>
+            <li>FastAPI</li>
+            <li>Docker</li>
+            <li>Google Cloud</li>
+            <li>System Integration</li>
+          </ul>
+        </div>
+      </div>
       <div class="layers">
-        <details class="layer"><summary><span class="num">1</span>Context<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">2</span>What I built<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">3</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li></ul><div class="stack"><span class="tech ph">stack</span><span class="tech ph">stack</span><span class="tech ph">stack</span></div></div></details>
-        <details class="layer"><summary><span class="num">4</span>Figures<span class="grow"></span></summary><div class="layer-in"><div class="figs"><button class="figslot" type="button">figure slot</button><button class="figslot" type="button">figure slot</button></div></div></details>
+        <details class="layer"><summary><span class="num">1</span>AI Lawyer Assistant<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Scraped judicial decisions from <b>Brazil's most important tribunals</b> using Python with <b>BeautifulSoup and Selenium</b>.</li>
+          <li>Ran the collection as scheduled <b>Airflow</b> routines with error-message handling, so a scraper that broke announced itself instead of quietly returning nothing.</li>
+          <li>Built the search engine on a <b>ClickHouse vector database</b>, embedding each decision's official summary with OpenAI <b>ada-002</b> &mdash; so a lawyer could search by <i>meaning</i> rather than by keyword.</li>
+          <li>Summarised the jurisprudence with <b>GPT-3.5 through LangChain</b>, turning long rulings into something triageable at a glance.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">2</span>Invoice Data Extraction<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Automated invoice processing for a <b>textile company receiving 100+ invoices daily</b>, removing manual data extraction and standardising inconsistent formats into one.</li>
+          <li>Summarised each PDF invoice's context with <b>GPT-3.5 through LangChain</b>, then processed and prepared the extracted fields for downstream use.</li>
+          <li>Reached <b>98% accuracy</b> and cut <b>six hours of manual work per day</b>.</li>
+          <li>Served inference from a <b>FastAPI</b> endpoint, containerised with <b>Docker</b> and deployed to <b>Google Cloud Run</b>.</li>
+          <li>Integrated the system into the tooling the company already ran.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">3</span>How I shipped it<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Both systems ran unattended &mdash; one on a schedule with failure alerting, the other as an always-on API behind a container.</li>
+          <li>Treated the language model as <i>one component in a pipeline</i> rather than the product: scraping, orchestration, embedding, storage and integration were the bulk of the work.</li>
+          <li>Built in 2023, when GPT-3.5 and LangChain were brand new &mdash; the very start of the generative AI boom.</li>
+        </ul></div></details>
       </div>
     </div>
   </section>
 
   <section class="slide" data-kind="pos" data-cat="market" data-start="2024.33" data-end="2024.67" data-org="Marketdata" data-title="VISA / Itaú">
     <div class="slide-in">
-      <div class="meta"><span class="coord">2024 &middot; May — Sep</span><span class="chip">Banking</span></div>
+      <div class="meta"><span class="coord">May 2024 &mdash; Sep 2024</span><span class="chip">Marketing</span></div>
       <h2 class="head">CRM Campaign Data Validation</h2>
-      <p class="org">Data Scientist &middot; Marketdata — VISA / Itaú</p>
-      <p class="thesis"><span class="ph">The one sentence you say out loud.</span></p>
+      <p class="org">Data Scientist &middot; Marketdata &mdash; VISA / Itaú</p>
+      <div class="thesis-row">
+        <p class="thesis">Making sure the numbers were right &mdash; CRM campaign data reconciled across three systems that all had to tell the same story.</p>
+        <div class="spec">
+          <div class="lab">Skills developed</div>
+          <ul class="speclist">
+            <li>SQL</li>
+            <li>AWS Athena</li>
+            <li>Salesforce</li>
+            <li>QuickSight</li>
+            <li>Excel</li>
+            <li>Data Quality</li>
+            <li>Funnel Analysis</li>
+            <li>Report Writing</li>
+          </ul>
+        </div>
+      </div>
       <div class="layers">
-        <details class="layer"><summary><span class="num">1</span>Context<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">2</span>What I did<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">3</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li></ul><div class="stack"><span class="tech ph">stack</span><span class="tech ph">stack</span><span class="tech ph">stack</span></div></div></details>
-        <details class="layer"><summary><span class="num">4</span>Figures<span class="grow"></span></summary><div class="layer-in"><div class="figs"><button class="figslot" type="button">figure slot</button><button class="figslot" type="button">figure slot</button></div></div></details>
+        <details class="layer"><summary><span class="num">1</span>The work<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Validated CRM campaign data for <b>Itaú</b> across <b>Salesforce</b>, <b>AWS databases</b> and <b>QuickSight</b> &mdash; the system of record, the SQL layer beneath it and the BI layer on top all had to agree.</li>
+          <li>Authored detailed reports on <b>data quality and integrity</b>, documenting what was wrong and where.</li>
+          <li>Extracted, processed and summarised campaign results using <b>AWS Athena</b> (SQL) and <b>Excel</b>.</li>
+          <li>Built dashboards and ran <b>campaign funnel analysis</b>, tracking where contacts fell out between stages.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">2</span>How I worked<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Checked the same question at three levels &mdash; what Salesforce recorded, what the underlying AWS tables held, and what QuickSight displayed &mdash; since a mismatch at any one of them changes the conclusion.</li>
+          <li>Wrote SQL in <b>Athena</b> to pull campaign results directly, then carried the analysis into Excel, where the campaign team already worked.</li>
+          <li>Turned the checks into <i>written reports on data quality</i> rather than raw lists of discrepancies.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">3</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Campaign teams got numbers they could act on, with the caveats written down instead of assumed.</li>
+          <li>Took every discrepancy back to the team that owned it, showing where it originated and agreeing the fix &mdash; so corrections landed at the source instead of being patched downstream.</li>
+        </ul></div></details>
       </div>
     </div>
   </section>
 
   <section class="slide" data-kind="pos" data-cat="market" data-start="2024.67" data-end="2025.87" data-org="Marketdata" data-title="Gain Theory / Nomad Foods">
     <div class="slide-in">
-      <div class="meta"><span class="coord">2024 — 2025</span><span class="chip">Marketing</span></div>
-      <h2 class="head">Marketing Mix Modeling, Six Markets</h2>
-      <p class="org">Data Scientist &middot; Marketdata — Gain Theory / Nomad Foods</p>
-      <p class="thesis"><span class="ph">The one sentence you say out loud.</span></p>
-      <div class="layers">
-        <details class="layer"><summary><span class="num">1</span>Context<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">2</span>What I did<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">3</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li></ul><div class="stack"><span class="tech ph">stack</span><span class="tech ph">stack</span><span class="tech ph">stack</span></div></div></details>
-        <details class="layer"><summary><span class="num">4</span>Figures<span class="grow"></span></summary><div class="layer-in"><div class="figs"><button class="figslot" type="button">figure slot</button><button class="figslot" type="button">figure slot</button></div></div></details>
+      <div class="meta"><span class="coord">Sep 2024 &mdash; Nov 2025</span><span class="chip">Marketing</span></div>
+      <h2 class="head">Marketing Mix Modeling</h2>
+      <p class="org">Data Scientist &middot; Marketdata &mdash; Gain Theory / Nomad Foods</p>
+      <div class="thesis-row">
+        <p class="thesis">Working out what the advertising was actually worth &mdash; regression models attributing frozen-food sales to media spend, so budget decisions had evidence under them.</p>
+        <div class="spec">
+          <div class="lab">Skills developed</div>
+          <ul class="speclist">
+            <li>Python</li>
+            <li>Excel</li>
+            <li>Statistics</li>
+            <li>Machine Learning</li>
+            <li>Marketing Mix Modeling</li>
+            <li>Data Visualization</li>
+            <li>Agentic Coding</li>
+            <li>English</li>
+          </ul>
+        </div>
       </div>
-    </div>
+      <div class="layers">
+        <details class="layer"><summary><span class="num">1</span>The work<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Delivered <b>Marketing Mix Modeling</b> for <b>Nomad Foods</b> as part of the <b>Gain Theory</b> consultancy team, across the UK, Germany, Italy, France, Austria and Serbia.</li>
+          <li>Modelled a <b>frozen-food portfolio</b> &mdash; chicken and fish bites, vegetables and the rest of the range &mdash; against media spend on <b>television, radio, YouTube, social media and out-of-home</b>.</li>
+          <li>Fitted <b>multiple linear regression, both OLS and Bayesian</b>, using the consultancy's proprietary modelling tools.</li>
+          <li>Calculated <b>marketing ROI</b> per channel to evaluate campaign effectiveness.</li>
+          <li>Validated and prepared the input data &mdash; a mix model is only ever as good as the spend and sales series feeding it.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">2</span>How I worked<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Worked in <b>English</b> with a distributed consultancy team, aligning objectives and deliverables across every market.</li>
+          <li>Improved the recurring workflow in <b>Python and Excel</b>, making each modelling cycle faster and more reliable rather than repeating it by hand.</li>
+          <li>Summarised findings as visualisations and presentations an international team could act on.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">3</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Per-channel ROI became the basis for how budget was split across television, digital and out-of-home.</li>
+          <li>Workflow improvements turned a manual, repeated process into a faster and more dependable one.</li>
+        </ul></div></details>
+      </div>
   </section>
 
   <section class="slide" data-kind="pos" data-cat="health" data-start="2025.87" data-end="2026.5" data-org="Hapvida" data-title="Medical Staffing Dimensioning">
     <div class="slide-in">
-      <div class="meta"><span class="coord">2025 — 2026</span><span class="chip">Healthcare</span></div>
+      <div class="meta"><span class="coord">Nov 2025 &mdash; Jul 2026</span><span class="chip">Healthcare</span></div>
       <h2 class="head">Medical Staffing Dimensioning</h2>
-      <p class="org">Data Scientist &middot; Hapvida, São Paulo</p>
-      <p class="thesis"><span class="ph">The one sentence you say out loud.</span></p>
+      <p class="org">Data Scientist &middot; Hapvida &mdash; S&atilde;o Paulo, Brazil</p>
+      <div class="thesis-row wide">
+        <p class="thesis">Replacing a spreadsheet with a system &mdash; hourly demand forecast and the roster solved for <b>144 hospitals and emergency units</b>, meeting service levels without paying for idle hours.</p>
+        <div class="spec">
+          <div class="lab">Skills developed</div>
+          <ul class="speclist">
+            <li>Databricks</li>
+            <li>Linux</li>
+            <li>PySpark</li>
+            <li>SQL</li>
+            <li>Python</li>
+            <li>Machine Learning</li>
+            <li>Statistics</li>
+            <li>MLflow</li>
+            <li>Operational Research</li>
+            <li>Simulation</li>
+            <li>Streamlit</li>
+            <li>Software Engineering</li>
+            <li>Agentic Coding</li>
+          </ul>
+        </div>
+      </div>
       <div class="layers">
-        <details class="layer"><summary><span class="num">1</span>Context<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">2</span>Architecture<span class="grow"></span></summary><div class="layer-in"><p class="ph-note">Reserved for the system diagram — Oracle → curated Delta tables → forecast → optimizer → BI &amp; app.</p><div class="figs"><button class="figslot" type="button">diagram slot</button></div></div></details>
-        <details class="layer"><summary><span class="num">3</span>Modeling<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">4</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li></ul><div class="stack"><span class="tech ph">stack</span><span class="tech ph">stack</span><span class="tech ph">stack</span></div></div></details>
-        <details class="layer"><summary><span class="num">5</span>Figures<span class="grow"></span></summary><div class="layer-in"><div class="figs"><button class="figslot" type="button">figure slot</button><button class="figslot" type="button">figure slot</button><button class="figslot" type="button">figure slot</button></div></div></details>
+        <details class="layer"><summary><span class="num">1</span>The work<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Built an automated medical staffing system on <b>Databricks</b> that replaced a manual, spreadsheet-based process across <b>144 hospitals and emergency care units</b>.</li>
+          <li>Produced <b>data-backed, auditable rosters</b> &mdash; every number traceable to the data that produced it, rather than to whoever last edited the sheet.</li>
+          <li>Targeted the real trade-off directly: meet the <b>service level agreements</b> while cutting <b>idle medical hours</b>, two objectives that pull against each other.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">2</span>Modelling<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Forecast <b>hourly demand</b> with <b>LightGBM</b>, tuned using <b>Optuna</b> and backtested with <b>walk-forward cross-validation</b> &mdash; the only honest way to score a time series, since a random split lets the model see its own future.</li>
+          <li>Solved the roster as a <b>mixed-integer linear program</b> with <b>PuLP</b>, turning the forecast into an actual schedule under real staffing constraints.</li>
+          <li>Verified the solution with <b>Monte Carlo simulation</b>, so the roster was tested against demand that did not go to plan.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">3</span>Platform &amp; engineering<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Extracted from <b>Oracle</b>, engineered features and curated <b>Delta tables in Unity Catalog</b>, with data quality alerts and daily monitoring of system results against actuals, in <b>SQL and PySpark</b>.</li>
+          <li>Orchestrated and deployed as code with <b>Databricks Asset Bundles</b>, with experiment tracking in <b>MLflow</b>.</li>
+          <li>Shipped a <b>Databricks BI dashboard</b> so the business could self-serve outputs, history and KPIs, plus a <b>Streamlit</b> app to simulate scenarios and quantify what a given SLA target actually costs.</li>
+          <li>Treated it as software, not a notebook: documentation site with <b>MkDocs</b>, unit tests with <b>pytest</b>, code quality via <b>Ruff, MyPy and pre-commit</b>, and AI agent instructions and skills committed to the repository.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">4</span>Outcome<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>A manual process for 144 units became a monitored pipeline that runs on its own and reports when it disagrees with reality.</li>
+          <li>The business stopped asking for the numbers and started reading them, through the dashboard and the scenario app.</li>
+          <li>Staffing decisions became defensible &mdash; the roster can be explained, reproduced and audited after the fact.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">5</span>Figures<span class="grow"></span></summary><div class="layer-in"><div class="figs"><button class="figslot" type="button"><img src="img/hapv-workflow.webp" loading="lazy" alt="System architecture in seven stages: data extraction from the lake into raw and feature tables, modelling validation by hyperparameter tuning and walk-forward validation, model training, demand prediction with RMSE scored by prediction level, roster optimization with a calibration stress test, and delivery to experiment runs and a dashboard. MLflow experiments track features, validation, models, predictions and rosters throughout."><span class="figcap">System architecture</span></button><button class="figslot" type="button"><img src="img/hapv-jobs.webp" loading="lazy" alt="The Databricks job graph: data extraction, preprocessing, validation, training and prediction run in sequence, then fan out to six roster engine tasks on separate clusters before converging on post-processing."><span class="figcap">Databricks job graph</span></button><button class="figslot" type="button"><img src="img/hapv-prediction.webp" loading="lazy" alt="Two weeks of hourly demand. Actual demand from the same period a year earlier plotted against the prediction and two robust variants, showing the daily cycle and the weekday to weekend shift."><span class="figcap">Hourly demand forecast</span></button><button class="figslot" type="button"><img src="img/hapv-roster.webp" loading="lazy" alt="Roster output for two days. Each row shows raw demand against the staffing cap with the resulting queue, the patient wait time profile against its limit, doctor idle time, and the SLA distribution across simulation runs with its average and fifth percentile."><span class="figcap">Roster and SLA simulation</span></button></div></div></details>
       </div>
     </div>
   </section>
 
   <section class="slide" data-kind="pos" data-cat="health" data-start="2026.5" data-end="2026.95" data-org="Hapvida" data-title="Delinquency Collection Scoring">
     <div class="slide-in">
-      <div class="meta"><span class="coord">2026 &middot; Jul — now</span><span class="chip">Healthcare</span></div>
+      <div class="meta"><span class="coord">Jul 2026 &mdash; now</span><span class="chip">Healthcare</span></div>
       <h2 class="head">Delinquency Collection Scoring</h2>
-      <p class="org">Data Scientist &middot; Hapvida, São Paulo</p>
-      <p class="thesis"><span class="ph">The one sentence you say out loud.</span></p>
+      <p class="org">Data Scientist &middot; Hapvida &mdash; S&atilde;o Paulo, Brazil</p>
+      <div class="thesis-row">
+        <p class="thesis">Scoring overdue health-plan contracts by their probability of payment <i>over time</i> &mdash; so the collection team can build data-driven strategies instead of working the list by intuition.</p>
+        <div class="spec">
+          <div class="lab">Skills developed</div>
+          <ul class="speclist">
+            <li>Survival Analysis</li>
+            <li>Python</li>
+            <li>Statistics</li>
+            <li>Databricks</li>
+            <li>Linux</li>
+            <li>SQL</li>
+            <li>PySpark</li>
+            <li>Machine Learning</li>
+          </ul>
+        </div>
+      </div>
       <div class="layers">
-        <details class="layer"><summary><span class="num">1</span>Context<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">2</span>What I'm building<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li><li><span class="ph">Talking point</span></li></ul></div></details>
-        <details class="layer"><summary><span class="num">3</span>Where it's going<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Talking point</span></li></ul><div class="stack"><span class="tech ph">stack</span><span class="tech ph">stack</span><span class="tech ph">stack</span></div></div></details>
-        <details class="layer"><summary><span class="num">4</span>Figures<span class="grow"></span></summary><div class="layer-in"><div class="figs"><button class="figslot" type="button">figure slot</button><button class="figslot" type="button">figure slot</button></div></div></details>
+        <details class="layer"><summary><span class="num">1</span>The work<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>Developing a <b>survival model</b> that scores overdue health-plan contracts by their <b>probability of payment over time</b>.</li>
+          <li>Supporting the business team in targeting its collection strategy, to prevent <b>cancellation by non-payment</b> before it happens.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">2</span>Why survival analysis<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li>A classifier answers <i>will they pay</i>. Collections needs <i>will they pay, and when</i> &mdash; a contract likely to settle next week and one likely to settle in two months call for entirely different action.</li>
+          <li>Survival models handle contracts that have not resolved yet without discarding them, which is most of the live portfolio at any moment.</li>
+        </ul></div></details>
+        <details class="layer"><summary><span class="num">3</span>Where it is going<span class="grow"></span></summary><div class="layer-in"><ul>
+          <li><b>In progress</b> &mdash; current work as of this deck.</li>
+          <li>The measures that matter are the business ones, not model fit: <b>reduction in median delinquency time</b>, and how much of the <b>value at risk</b> is recovered rather than lost to cancellation.</li>
+        </ul></div></details>
       </div>
     </div>
   </section>
@@ -614,16 +863,25 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
     <div class="slide-in">
       <div class="meta"><span class="lab">Self-directed</span></div>
       <h2 class="head">Portfolio</h2>
-      <p class="org"><span class="ph-note">Eight projects — click any to open it full screen.</span></p>
-      <div class="gridcards">
-        <div class="gcard"><span class="yr">2024 / 25</span><h4>MAIA</h4><p class="ph-note">one line</p></div>
-        <div class="gcard"><span class="yr">2024</span><h4>MLCenter</h4><p class="ph-note">one line</p></div>
-        <div class="gcard"><span class="yr">2023</span><h4>Credit Risk Modeling</h4><p class="ph-note">one line</p></div>
-        <div class="gcard"><span class="yr">2022</span><h4>Fraud Detection</h4><p class="ph-note">one line</p></div>
-        <div class="gcard"><span class="yr">2024</span><h4>Customer Segmentation</h4><p class="ph-note">one line</p></div>
-        <div class="gcard"><span class="yr">2024</span><h4>Energy Forecasting</h4><p class="ph-note">one line</p></div>
-        <div class="gcard"><span class="yr">2023</span><h4>Pizzeria Dashboard</h4><p class="ph-note">one line</p></div>
-        <div class="gcard"><span class="yr">2023</span><h4>Digital Platform Sales</h4><p class="ph-note">one line</p></div>
+      <p class="org">Nine projects, every one public on GitHub &mdash; two of them running as live apps.</p>
+      <div class="pfgrid">
+        <div class="pfcol"><h4>Applications</h4><div class="pf"><span class="yr">2024/25 &middot; LLM &middot; Python &middot; Streamlit</span><h5><a href="https://github.com/felipebita/maia" target="_blank" rel="noopener noreferrer">MAIA &mdash; My Artificial Intelligence App</a></h5><p>Document chat, summarisation, image generation, object detection and agentic NL2VIZ workflows, on GPT-4, DALL&middot;E and YOLOv8.</p><div class="lnks"><a href="https://maiaonline.streamlit.app/" target="_blank" rel="noopener noreferrer">live app<span class="g">&#9656;</span></a></div></div><div class="pf"><span class="yr">2024 &middot; Python &middot; FastAPI &middot; Cloud Run</span><h5><a href="https://github.com/felipebita/mlcenter_app" target="_blank" rel="noopener noreferrer">MLCenter</a></h5><p>Predictive analytics hub serving the two models below as live endpoints.</p><div class="lnks"><a href="https://mlcenter-app-waxugbmvta-uc.a.run.app/" target="_blank" rel="noopener noreferrer">live app<span class="g">&#9656;</span></a></div></div></div>
+        <div class="pfcol"><h4>Machine Learning</h4><div class="pf"><span class="yr">2022 &middot; ML &middot; Python</span><h5><a href="https://github.com/felipebita/fraud_detection" target="_blank" rel="noopener noreferrer">Fraudulent Transaction Detection</a></h5><p>Precision <b>0.96</b>, recall <b>0.73</b> &mdash; <b>$57M</b> revenue across 52,185 transactions.</p></div><div class="pf"><span class="yr">2023 &middot; ML &middot; Python</span><h5><a href="https://github.com/felipebita/credit_risk/tree/main" target="_blank" rel="noopener noreferrer">Credit Risk Modeling</a></h5><p>Precision <b>0.96</b>, recall <b>0.74</b> &mdash; <b>$38M</b> portfolio at 85% acceptance, 8.6% bad rate.</p></div><div class="pf"><span class="yr">2024 &middot; ML &middot; Python &middot; Power BI</span><h5><a href="https://github.com/felipebita/energy_forecasting" target="_blank" rel="noopener noreferrer">Energy Production Forecasting</a></h5><p>ARIMA quarterly forecasts on ONS and Eneva production data, <b>SMAPE 0.488</b>.</p></div><div class="pf"><span class="yr">2024 &middot; ML &middot; Python</span><h5><a href="https://github.com/felipebita/customerseg" target="_blank" rel="noopener noreferrer">Customer Segmentation</a></h5><p>K-means on order frequency, timing and volume &mdash; five clusters built for targeting.</p></div></div>
+        <div class="pfcol"><h4>Analytics &amp; SQL</h4><div class="pf"><span class="yr">2023 &middot; SQL Server &middot; Excel</span><h5><a href="https://github.com/felipebita/pizza_sales/tree/main" target="_blank" rel="noopener noreferrer">Pizzeria Sales Dashboard</a></h5><p>Revenue, average order value, daily and hourly trends, best and worst sellers.</p></div><div class="pf"><span class="yr">2023 &middot; SQL</span><h5><a href="https://github.com/felipebita/digital_market_sales" target="_blank" rel="noopener noreferrer">Digital Platform Sales Analysis</a></h5><p>Sales analysis for a digital-products marketplace, written up as a decision report.</p></div><div class="pf"><span class="yr">2022 &middot; SQL</span><h5><a href="https://github.com/felipebita/optimizing_online_sports_retail_revenue" target="_blank" rel="noopener noreferrer">Optimizing Online Sports Retail Revenue</a></h5><p>CTEs and correlation across pricing, reviews and traffic to find revenue levers.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TALKS -->
+  <section class="slide" data-kind="section" data-nav="Talks" data-title="Talks &amp; Teaching">
+    <div class="slide-in">
+      <div class="meta"><span class="lab">Explaining the work</span></div>
+      <h2 class="head">Talks &amp; Teaching</h2>
+      <p class="org">Conference talks and university lectures &mdash; every one with slides or video attached.</p>
+      <div class="pfgrid">
+        <div class="pfcol"><h4>Thesis &amp; research</h4><div class="pf"><span class="yr">2023 &middot; thesis defence</span><span class="tag">EN</span><h5>PhD Defense</h5><p>Contaminant identification and multiomic analysis applied in polyploid tropical forage grasses molecular breeding.</p><div class="lnks"><a href="https://drive.google.com/file/d/1avUpwH16_cMy_DZk7N3cYd0LzD9HfED8/view?usp=sharing" target="_blank" rel="noopener noreferrer">slides<span class="g">&#9656;</span></a></div></div><div class="pf"><span class="yr">2021 &middot; conference</span><span class="tag">EN</span><h5>Contaminant Identification in Polyploids</h5><p>Video-poster for the 11th Brazilian Congress of Plant Breeding, and the full talk at the IV GBMeeting &mdash; <b>second place</b> in the Bioinformatics section.</p><div class="lnks"><a href="https://drive.google.com/file/d/1K8t9R4DzqFK9VmUHQcnjwUwpBBbcKFyv/view?usp=sharing" target="_blank" rel="noopener noreferrer">video-poster<span class="g">&#9656;</span></a><a href="https://www.youtube.com/watch?v=s2i3RN-3FJI" target="_blank" rel="noopener noreferrer">full talk<span class="g">&#9656;</span></a><a href="https://drive.google.com/file/d/1ZNiU0DJR6gp9UOYBPMgQW2FgjUXWRg8i/view?usp=sharing" target="_blank" rel="noopener noreferrer">award<span class="g">&#9656;</span></a><a href="https://www.frontiersin.org/articles/10.3389/fpls.2021.737919/full" target="_blank" rel="noopener noreferrer">paper<span class="g">&#9656;</span></a></div></div></div>
+        <div class="pfcol"><h4>Genomics lectures</h4><div class="pf"><span class="yr">2022 &middot; BV782, UNICAMP</span><span class="tag">EN</span><h5>Bioinformatics and AI Applied to Genomics</h5><p>History, importance and future of bioinformatics, then an introduction to machine learning &mdash; supervised and unsupervised, with their evaluation metrics and plant-genetics examples.</p><div class="lnks"><a href="https://docs.google.com/presentation/d/1hUDR54jrX8WfxMptwUonaxQKousb_t6eU38vOSNbQvI/edit?usp=sharing" target="_blank" rel="noopener noreferrer">slides<span class="g">&#9656;</span></a></div></div><div class="pf"><span class="yr">2020 &middot; BV782, UNICAMP</span><span class="tag">PT-BR</span><h5>Genomic Selection</h5><p>From Meuwissen (2001) to how genomic selection models are evaluated, closing on my own work in half-sibling families of <i>Urochloa ruziziensis</i>.</p><div class="lnks"><a href="https://drive.google.com/file/d/1mCsgztu_3Aw5fAifUz7Rt2LNbj2TSLjq/view?usp=sharing" target="_blank" rel="noopener noreferrer">video<span class="g">&#9656;</span></a></div></div></div>
+        <div class="pfcol"><h4>Breeding &amp; statistics</h4><div class="pf"><span class="yr">2019 &middot; BV880, UNICAMP</span><span class="tag">PT-BR</span><h5>Genetic Markers</h5><p>Morphological and molecular markers, focused on microsatellites and SNPs and their use in linkage maps and QTL mapping.</p><div class="lnks"><a href="https://drive.google.com/file/d/1jXof4E6BPAY00_-0V_jWP3NAH1zdsNeK/view?usp=sharing" target="_blank" rel="noopener noreferrer">slides<span class="g">&#9656;</span></a></div></div><div class="pf"><span class="yr">lab session</span><span class="tag">EN</span><h5>Linear Regression</h5><p>Written as a scheme for my own study, then used to teach lab colleagues: fitting the line, calculating R&sup2;, and the F-test.</p><div class="lnks"><a href="https://docs.google.com/presentation/d/1R6fViHULsb0LGOy7FC9hUny7v4ktDfaD/edit?usp=sharing&amp;ouid=106210785402829867900&amp;rtpof=true&amp;sd=true" target="_blank" rel="noopener noreferrer">slides<span class="g">&#9656;</span></a></div></div></div>
       </div>
     </div>
   </section>
@@ -633,17 +891,11 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
     <div class="slide-in">
       <div class="meta"><span class="lab">Continuous learning</span></div>
       <h2 class="head">Certificates &amp; Courses</h2>
-      <p class="org"><span class="ph-note">Grouped by theme &mdash; lead with the two or three that matter for the role in the room.</span></p>
-      <div class="kitgrid">
-        <div class="kitcol"><h4>Domain</h4><div class="stack"><span class="tech ph">certificate</span><span class="tech ph">certificate</span></div></div>
-        <div class="kitcol"><h4>Engineering &amp; MLOps</h4><div class="stack"><span class="tech ph">certificate</span><span class="tech ph">certificate</span><span class="tech ph">certificate</span></div></div>
-        <div class="kitcol"><h4>Data &amp; Analytics</h4><div class="stack"><span class="tech ph">certificate</span><span class="tech ph">certificate</span><span class="tech ph">certificate</span></div></div>
-        <div class="kitcol"><h4>AI &amp; LLM</h4><div class="stack"><span class="tech ph">certificate</span><span class="tech ph">certificate</span></div></div>
-        <div class="kitcol"><h4>Cloud</h4><div class="stack"><span class="tech ph">certificate</span><span class="tech ph">certificate</span></div></div>
-        <div class="kitcol"><h4>Ways of working</h4><div class="stack"><span class="tech ph">certificate</span><span class="tech ph">certificate</span></div></div>
-      </div>
-      <div class="layers">
-        <details class="layer"><summary><span class="num">1</span>Education &amp; publications<span class="grow"></span></summary><div class="layer-in"><ul><li><span class="ph">Doctorate / Bachelor line</span></li><li><span class="ph">Publications and award</span></li></ul></div></details>
+      <p class="org">42 certificates &middot; <b>337+ documented hours</b> &middot; 2017 to 2026 &mdash; each title links to the certificate.</p>
+      <div class="certgrid">
+        <div class="certcol"><div class="certgrp"><h4>Machine Learning &amp; MLOps<b>5</b></h4><div class="cert"><span class="cy">2024</span><div><a href="https://drive.google.com/file/d/1x6nxkyZDWLth9lOkWXFeNJwuuqFHY9Sn/view?usp=sharing" target="_blank" rel="noopener noreferrer">Machine Learning Engineer</a></div><span class="cp">Datacamp &middot; 44h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1x71sIUXcmIV24fQwvODkK24bCiESeomo/view?usp=sharing" target="_blank" rel="noopener noreferrer">Unit Testing for Data Science in Python</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1xAhUkT9BRLqbCZ2N5LcLv_YUmJEy8etH/view?usp=sharing" target="_blank" rel="noopener noreferrer">Software Engineering Principles in Python</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1oizEbC0cTzyhxkx6R9ymTTpVqLSPWl_A/view?usp=sharing" target="_blank" rel="noopener noreferrer">Time Series with Python</a></div><span class="cp">Datacamp &middot; 20h</span></div><div class="cert"><span class="cy">2021</span><div><a href="https://drive.google.com/file/d/19EUJxcxSmca0JYPNQ3DkGtgAuT_ugQA0/view?usp=sharing" target="_blank" rel="noopener noreferrer">Introduction to Machine Learning in Python</a></div><span class="cp">FEALQ &middot; 8h</span></div></div><div class="certgrp"><h4>AI &amp; LLM<b>4</b></h4><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1rNgRmFQqTjJPb1IdfwBVk59G2pCqRhOw/view?usp=sharing" target="_blank" rel="noopener noreferrer">Introduction to Embeddings, OpenAI API</a></div><span class="cp">Datacamp &middot; 3h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1rJwFcaE54XGNltfuKF643uDVwpH-7ADX/view?usp=sharing" target="_blank" rel="noopener noreferrer">Working With the OpenAI API</a></div><span class="cp">Datacamp &middot; 3h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1xBKVfuPrW1p58mFiz5h4cIGmliFk0Vd6/view?usp=sharing" target="_blank" rel="noopener noreferrer">Large Language Models (LLMs) Concepts</a></div><span class="cp">Datacamp &middot; 2h</span></div><div class="cert"><span class="cy">2021</span><div><a href="https://drive.google.com/file/d/1Kvevj-b6x5IHdW6dMhtx4A4O6vIuMLIC/view?usp=sharing" target="_blank" rel="noopener noreferrer">Python for Natural Language Processing</a></div><span class="cp">ICMC&nbsp;USP &middot; 20h</span></div></div><div class="certgrp"><h4>Analytics, BI &amp; Cloud<b>4</b></h4><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1ogHKMtKHQe1uvn6wloNaFviJgzphx220/view?usp=sharing" target="_blank" rel="noopener noreferrer">Power BI Fundamentals</a></div><span class="cp">Datacamp &middot; 17h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1otGc63TJ8h2DFmDZBZJufPvhrkqj9WDm/view?usp=sharing" target="_blank" rel="noopener noreferrer">Excel Fundamentals</a></div><span class="cp">Datacamp &middot; 16h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1I6tInUNcW5lWgpTLCI6BqNQ_Zf1Df5kR/view?usp=sharing" target="_blank" rel="noopener noreferrer">Web Scraping in Python</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2022</span><div><a href="https://drive.google.com/file/d/1ai6LwEgR57ljlLUYnnVNlXejyzdhYtuA/view?usp=sharing" target="_blank" rel="noopener noreferrer">AWS Cloud Concepts</a></div><span class="cp">Datacamp &middot; 2h</span></div></div></div>
+        <div class="certcol"><div class="certgrp"><h4>SQL &amp; Big Data<b>9</b></h4><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1fC7reen0sIIOae-Ap_XH9LWZc8kyZZzt/view?usp=sharing" target="_blank" rel="noopener noreferrer">Data Manipulation in SQL</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1f2ZI09B8BYWaFT6ncFecinABF6czzGEh/view?usp=sharing" target="_blank" rel="noopener noreferrer">Joining Data in SQL</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1dkrZnh_2qZGO4s10hefiMNRckbPEnuN_/view?usp=sharing" target="_blank" rel="noopener noreferrer">Feature Engineering with PySpark</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1c_2EdtVxgXGfd70KhM7FDPNFSfVsYz1q/view?usp=sharing" target="_blank" rel="noopener noreferrer">Cleaning Data with PySpark</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2022</span><div><a href="https://drive.google.com/file/d/1b7ohhfAYRzKhiNE2pfllhxDBx4mCD4Ly/view?usp=sharing" target="_blank" rel="noopener noreferrer">Big Data Fundamentals with PySpark</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2022</span><div><a href="https://drive.google.com/file/d/1b7bKvgzZeCIG-_RekUcwUzVasjJUikP0/view?usp=sharing" target="_blank" rel="noopener noreferrer">Introduction to PySpark</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2022</span><div><a href="https://drive.google.com/file/d/1b94YesXczVIrJQ1ByNSSdeoHbBEgg51m/view?usp=sharing" target="_blank" rel="noopener noreferrer">Intermediate SQL</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2022</span><div><a href="https://drive.google.com/file/d/1aUCvCw1mN-ksYgQSeUOPcFEJ_od1Eajs/view?usp=sharing" target="_blank" rel="noopener noreferrer">Intermediate SQL Queries</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2022</span><div><a href="https://drive.google.com/file/d/1b8m1JsFtVsFa_dYwS8bIQVJv4c2HRCT2/view?usp=sharing" target="_blank" rel="noopener noreferrer">Introduction to SQL</a></div><span class="cp">Datacamp &middot; 2h</span></div></div><div class="certgrp"><h4>Finance &amp; Healthcare<b>5</b></h4><div class="cert"><span class="cy">2026</span><div><a href="https://coursera.org/verify/specialization/GJOYW5AHMR72" target="_blank" rel="noopener noreferrer">The Business of Health Care</a></div><span class="cp">PennMed&nbsp;Wharton &middot; 4 courses</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1fF3VtFfmJBp2n2ffkhBy1gl_ZID9-cTL/view?usp=sharing" target="_blank" rel="noopener noreferrer">Credit Risk Modeling in Python</a></div><span class="cp">Datacamp &middot; 4h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/103VFi3z0LpAzpDRTPs-gt-lttj9WQ7i0/view?usp=sharing" target="_blank" rel="noopener noreferrer">Fundamentals of Credit</a></div><span class="cp">CFI &middot; 2h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1fC8GL19hZNDbyOoZJTXCHxORk2YSSPKg/view?usp=sharing" target="_blank" rel="noopener noreferrer">Introduction to Banking</a></div><span class="cp">CFI &middot; 2h</span></div><div class="cert"><span class="cy">2023</span><div><a href="https://drive.google.com/file/d/1fE8Co0DhhD5d7PjjF6Omssukq8QHg2ki/view?usp=sharing" target="_blank" rel="noopener noreferrer">Introduction to Fintech</a></div><span class="cp">CFI &middot; 1h</span></div></div><div class="certgrp"><h4>Teaching &mdash; course assistant<b>2</b></h4><div class="cert"><span class="cy">2021</span><div><a href="https://drive.google.com/file/d/15iZMPb9eaEpiupDYq-whndwP1_rwULCC/view?usp=sharing" target="_blank" rel="noopener noreferrer">Introduction to Python Programming</a></div><span class="cp">FEALQ &middot; 16h</span></div><div class="cert"><span class="cy">2021</span><div><span class="nl">Introduction to Python Programming</span></div><span class="cp">GenMelhor&nbsp;UFV &middot; 16h</span></div></div></div>
+        <div class="certcol"><div class="certgrp"><h4>Statistics &amp; Genomics<b>10</b></h4><div class="cert"><span class="cy">2022</span><div><a href="https://drive.google.com/file/d/1Z8r9yxfP9AybRhsd3jN1H7vaB_pKk5Wj/view?usp=sharing" target="_blank" rel="noopener noreferrer">Statistics for Biologists in R</a></div><span class="cp">GBMeeting&nbsp;UNICAMP &middot; 20h</span></div><div class="cert"><span class="cy">2021</span><div><a href="https://drive.google.com/file/d/1ZIkSSqdwMqHPLXytZ0NSW0feyNoTOYC5/view?usp=sharing" target="_blank" rel="noopener noreferrer">Statistical Genetics for Molecular Breeding</a></div><span class="cp">CBMP &middot; 3h</span></div><div class="cert"><span class="cy">2021</span><div><a href="https://drive.google.com/file/d/1J_To2U8-gZpB0dQmsQzgyrkFFhBPOulW/view?usp=sharing" target="_blank" rel="noopener noreferrer">Genomic Selection</a></div><span class="cp">Conecta&nbsp;GEM &middot; 6h</span></div><div class="cert"><span class="cy">2021</span><div><span class="nl">Applied Quantitative Genetics</span></div><span class="cp">Illinois&nbsp;Urbana-Champaign</span></div><div class="cert"><span class="cy">2021</span><div><span class="nl">Genomics-Assisted Breeding in Polyploids</span></div><span class="cp">USDA&nbsp;NIFA</span></div><div class="cert"><span class="cy">2019</span><div><a href="https://drive.google.com/file/d/1fTUxNCU-H9V7-5lfQbLS4Ql7Lm4u47gY/view?usp=sharing" target="_blank" rel="noopener noreferrer">Polyploid Genetic Data Analysis</a></div><span class="cp">FEALQ &middot; 21h</span></div><div class="cert"><span class="cy">2018</span><div><a href="https://drive.google.com/file/d/1j9asuhRvHxS7O-qa6QXbE3ln6dP42Lm8/view?usp=sharing" target="_blank" rel="noopener noreferrer">Genome-Wide Association Studies</a></div><span class="cp">FEALQ &middot; 8h</span></div><div class="cert"><span class="cy">2018</span><div><a href="https://drive.google.com/file/d/19J92QdIDi-0fcrrW1SJWtYoeCXQts-37/view?usp=sharing" target="_blank" rel="noopener noreferrer">Breeding Values in Autotetraploid Forages</a></div><span class="cp">EMBRAPA &middot; 32h</span></div><div class="cert"><span class="cy">2017</span><div><a href="https://drive.google.com/file/d/1PkApy5Gi8uClQx5Rq0lpLvsPpv8jLAVQ/view?usp=sharing" target="_blank" rel="noopener noreferrer">Bioinformatic Winter Course</a></div><span class="cp">UNIFESP &middot; 22h</span></div><div class="cert"><span class="cy">2017</span><div><a href="https://drive.google.com/file/d/1dtDY171JG3-n6YhZjtS0z5LyYtyUkg87/view?usp=sharing" target="_blank" rel="noopener noreferrer">Bioinformatic Analysis of NGS Data</a></div><span class="cp">SBG &middot; 3h</span></div></div><div class="certgrp"><h4>Johns Hopkins on Coursera<b>3</b></h4><div class="cert"><span class="cy">2018</span><div><a href="https://drive.google.com/file/d/1HeGfL3v1L-ugDlQieDHvPHUKhUdcEh5o/view?usp=sharing" target="_blank" rel="noopener noreferrer">Python for Genomic Data Science</a></div><span class="cp">Johns&nbsp;Hopkins</span></div><div class="cert"><span class="cy">2018</span><div><a href="https://drive.google.com/file/d/18OKYGD5EfB4wUOzSXNLKz9LX3kxYh280/view?usp=sharing" target="_blank" rel="noopener noreferrer">Getting and Cleaning Data</a></div><span class="cp">Johns&nbsp;Hopkins</span></div><div class="cert"><span class="cy">2018</span><div><a href="https://drive.google.com/file/d/1BmGpqLcqb4swR7zJlhL0VPlF6Hc4ad9_/view?usp=sharing" target="_blank" rel="noopener noreferrer">R Programming</a></div><span class="cp">Johns&nbsp;Hopkins</span></div></div></div>
       </div>
     </div>
   </section>
@@ -653,14 +905,8 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
     <div class="slide-in">
       <div class="meta"><span class="lab">What I reach for</span></div>
       <h2 class="head">Toolkit</h2>
-      <div class="kitgrid">
-        <div class="kitcol"><h4>Languages</h4><div class="stack"><span class="tech ph">item</span><span class="tech ph">item</span><span class="tech ph">item</span></div></div>
-        <div class="kitcol"><h4>Data platforms</h4><div class="stack"><span class="tech ph">item</span><span class="tech ph">item</span><span class="tech ph">item</span></div></div>
-        <div class="kitcol"><h4>Modeling</h4><div class="stack"><span class="tech ph">item</span><span class="tech ph">item</span><span class="tech ph">item</span></div></div>
-        <div class="kitcol"><h4>AI &amp; LLM</h4><div class="stack"><span class="tech ph">item</span><span class="tech ph">item</span><span class="tech ph">item</span></div></div>
-        <div class="kitcol"><h4>Orchestration &amp; deploy</h4><div class="stack"><span class="tech ph">item</span><span class="tech ph">item</span><span class="tech ph">item</span></div></div>
-        <div class="kitcol"><h4>Engineering practice</h4><div class="stack"><span class="tech ph">item</span><span class="tech ph">item</span><span class="tech ph">item</span></div></div>
-      </div>
+      <p class="org">Bars are the roles where a tool was used, coloured by the kind of work. Ticks mark the years I hold a course or certificate in it &mdash; so where study ran ahead of use, you can see it.</p>
+      <div class="tk"><div class="tkrow"><span></span><div class="tkaxis"><span class="tkm" style="left:0.0%"></span><span class="tkm" style="left:9.090909090909092%"></span><span class="tkm" style="left:18.181818181818183%"></span><span class="tkm" style="left:27.27272727272727%"></span><span class="tkm" style="left:36.36363636363637%"></span><span class="tkm" style="left:45.45454545454545%"></span><span class="tkm" style="left:54.54545454545454%"></span><span class="tkm" style="left:63.63636363636363%"></span><span class="tkm" style="left:72.72727272727273%"></span><span class="tkm" style="left:81.81818181818183%"></span><span class="tkm" style="left:90.9090909090909%"></span><span class="tkm" style="left:100.0%"></span><span class="tkt" style="left:4.545454545454546%">2016</span><span class="tkt" style="left:13.636363636363635%">2017</span><span class="tkt" style="left:22.727272727272727%">2018</span><span class="tkt" style="left:31.818181818181817%">2019</span><span class="tkt" style="left:40.909090909090914%">2020</span><span class="tkt" style="left:50.0%">2021</span><span class="tkt" style="left:59.09090909090909%">2022</span><span class="tkt" style="left:68.18181818181817%">2023</span><span class="tkt" style="left:77.27272727272727%">2024</span><span class="tkt" style="left:86.36363636363636%">2025</span><span class="tkt" style="left:95.45454545454545%">2026</span></div><span></span></div><div class="tkgrp">Languages & data</div><div class="tkrow tkitem"><span class="tkn">Python</span><div class="tktrack"><span class="tkbar" data-cat="research" style="left:45.00000000000041%;width:18.18181818181818%" title="Research 2020&ndash;2022"></span><span class="tkbar" data-cat="ai" style="left:63.18181818181859%;width:8.63636363636406%" title="Applied AI 2022&ndash;2023"></span><span class="tkbar" data-cat="market" style="left:78.81818181818248%;width:10.909090909089258%" title="Marketing 2024&ndash;2025"></span><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:9.81818181818322%" title="Healthcare 2025&ndash;2026"></span><span class="tkc" style="left:22.727272727272727%" title="Course or certificate, 2018"></span><span class="tkc" style="left:50.0%" title="Course or certificate, 2021"></span><span class="tkc" style="left:68.18181818181817%" title="Course or certificate, 2023"></span></div><span class="tkd"><span class="v">5.2y</span><span class="c">&middot;</span></span></div><div class="tkrow tkitem"><span class="tkn">SQL</span><div class="tktrack"><span class="tkbar" data-cat="market" style="left:75.72727272727207%;width:3.090909090910415%" title="Marketing 2024&ndash;2024"></span><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:9.81818181818322%" title="Healthcare 2025&ndash;2026"></span><span class="tkc" style="left:59.09090909090909%" title="Course or certificate, 2022"></span><span class="tkc" style="left:68.18181818181817%" title="Course or certificate, 2023"></span></div><span class="tkd"><span class="v">1.4y</span><span class="c">&middot;</span></span></div><div class="tkrow tkitem"><span class="tkn">R</span><div class="tktrack"><span class="tkbar" data-cat="research" style="left:20.000000000000416%;width:43.18181818181817%" title="Research 2018&ndash;2022"></span><span class="tkc" style="left:22.727272727272727%" title="Course or certificate, 2018"></span><span class="tkc" style="left:59.09090909090909%" title="Course or certificate, 2022"></span></div><span class="tkd"><span class="v">4.8y</span><span class="c"></span></span></div><div class="tkrow tkitem"><span class="tkn">Linux</span><div class="tktrack"><span class="tkbar" data-cat="research" style="left:7.545454545453883%;width:9.909090909092235%" title="Research 2016&ndash;2017"></span><span class="tkbar" data-cat="research" style="left:20.000000000000416%;width:43.18181818181817%" title="Research 2018&ndash;2022"></span><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:9.81818181818322%" title="Healthcare 2025&ndash;2026"></span><span class="tkc" style="left:13.636363636363635%" title="Course or certificate, 2017"></span></div><span class="tkd"><span class="v">6.9y</span><span class="c">&middot;</span></span></div><div class="tkgrp">Platforms & engineering</div><div class="tkrow tkitem"><span class="tkn">Databricks</span><div class="tktrack"><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:9.81818181818322%" title="Healthcare 2025&ndash;2026"></span></div><span class="tkd"><span class="v">1.1y</span><span class="c">&middot;</span></span></div><div class="tkrow tkitem"><span class="tkn">PySpark</span><div class="tktrack"><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:9.81818181818322%" title="Healthcare 2025&ndash;2026"></span><span class="tkc" style="left:59.09090909090909%" title="Course or certificate, 2022"></span><span class="tkc" style="left:68.18181818181817%" title="Course or certificate, 2023"></span></div><span class="tkd"><span class="v">1.1y</span><span class="c">&middot;</span></span></div><div class="tkrow tkitem"><span class="tkn">Airflow</span><div class="tktrack"><span class="tkbar" data-cat="ai" style="left:63.18181818181859%;width:8.63636363636406%" title="Applied AI 2022&ndash;2023"></span></div><span class="tkd"><span class="v">1.0y</span><span class="c"></span></span></div><div class="tkrow tkitem"><span class="tkn">Docker</span><div class="tktrack"><span class="tkbar" data-cat="ai" style="left:63.18181818181859%;width:8.63636363636406%" title="Applied AI 2022&ndash;2023"></span></div><span class="tkd"><span class="v">1.0y</span><span class="c"></span></span></div><div class="tkrow tkitem"><span class="tkn">Agentic Coding</span><div class="tktrack"><span class="tkbar" data-cat="market" style="left:78.81818181818248%;width:10.909090909089258%" title="Marketing 2024&ndash;2025"></span><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:5.727272727273714%" title="Healthcare 2025&ndash;2026"></span></div><span class="tkd"><span class="v">1.8y</span><span class="c">&middot;</span></span></div><div class="tkgrp">Modelling & AI</div><div class="tkrow tkitem"><span class="tkn">Statistics</span><div class="tktrack"><span class="tkbar" data-cat="research" style="left:20.000000000000416%;width:43.18181818181817%" title="Research 2018&ndash;2022"></span><span class="tkbar" data-cat="market" style="left:78.81818181818248%;width:10.909090909089258%" title="Marketing 2024&ndash;2025"></span><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:9.81818181818322%" title="Healthcare 2025&ndash;2026"></span><span class="tkc" style="left:22.727272727272727%" title="Course or certificate, 2018"></span><span class="tkc" style="left:31.818181818181817%" title="Course or certificate, 2019"></span><span class="tkc" style="left:50.0%" title="Course or certificate, 2021"></span><span class="tkc" style="left:59.09090909090909%" title="Course or certificate, 2022"></span></div><span class="tkd"><span class="v">7.0y</span><span class="c">&middot;</span></span></div><div class="tkrow tkitem"><span class="tkn">Machine Learning</span><div class="tktrack"><span class="tkbar" data-cat="research" style="left:20.000000000000416%;width:43.18181818181817%" title="Research 2018&ndash;2022"></span><span class="tkbar" data-cat="market" style="left:78.81818181818248%;width:10.909090909089258%" title="Marketing 2024&ndash;2025"></span><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:9.81818181818322%" title="Healthcare 2025&ndash;2026"></span><span class="tkc" style="left:50.0%" title="Course or certificate, 2021"></span><span class="tkc" style="left:68.18181818181817%" title="Course or certificate, 2023"></span><span class="tkc" style="left:77.27272727272727%" title="Course or certificate, 2024"></span></div><span class="tkd"><span class="v">7.0y</span><span class="c">&middot;</span></span></div><div class="tkrow tkitem"><span class="tkn">LLMs</span><div class="tktrack"><span class="tkbar" data-cat="ai" style="left:63.18181818181859%;width:8.63636363636406%" title="Applied AI 2022&ndash;2023"></span><span class="tkc" style="left:68.18181818181817%" title="Course or certificate, 2023"></span></div><span class="tkd"><span class="v">1.0y</span><span class="c"></span></span></div><div class="tkrow tkitem"><span class="tkn">Simulation</span><div class="tktrack"><span class="tkbar" data-cat="research" style="left:20.000000000000416%;width:24.999999999999996%" title="Research 2018&ndash;2020"></span><span class="tkbar" data-cat="health" style="left:89.72727272727174%;width:5.727272727273714%" title="Healthcare 2025&ndash;2026"></span></div><span class="tkd"><span class="v">3.4y</span><span class="c">&middot;</span></span></div><div class="tkrow tkitem"><span class="tkn">Survival Analysis</span><div class="tktrack"><span class="tkbar" data-cat="health" style="left:95.45454545454545%;width:4.090909090909506%" title="Healthcare 2026&ndash;2026"></span></div><span class="tkd"><span class="v">0.5y</span><span class="c">&middot;</span></span></div><div class="tkleg"><span><i style="background:var(--cat-research)"></i>Research</span><span><i style="background:var(--cat-ai)"></i>Applied AI</span><span><i style="background:var(--cat-market)"></i>Marketing</span><span><i style="background:var(--cat-health)"></i>Healthcare</span><span><i class="certmark" style="background:var(--ink-3)"></i>course or certificate</span><span>&middot; still current</span></div></div>
     </div>
   </section>
 
@@ -983,6 +1229,34 @@ kbd{font-family:"Coord",monospace; border:1px solid var(--line); background:var(
     var b = e.target.closest && e.target.closest('.figslot, .docbtn');
     if (b){ e.preventDefault(); openFigure(b); }
   });
+
+  // ---- toolkit: borrow the rail's x-axis ----
+  // Both timelines are on screen at once, so a chart on its own scale reads as a
+  // second, contradictory ruler. Measure the rail axis and pin the chart's track
+  // to it. Falls back to the plain CSS grid when the rail wraps on narrow screens.
+  (function(){
+    var tk = document.querySelector('.tk');
+    var axisEl = document.getElementById('axis') || document.querySelector('.axis');
+    if (!tk || !axisEl) return;
+    var GAP = 13, MINLAB = 108;
+    function sync(){
+      tk.style.marginLeft = '';
+      if (window.innerWidth < 980){ tk.classList.remove('is-synced'); return; }
+      var a = axisEl.getBoundingClientRect();
+      if (!a.width){ tk.classList.remove('is-synced'); return; }
+      var host = tk.getBoundingClientRect();
+      var lab = a.left - host.left - GAP;
+      var shift = 0;
+      if (lab < MINLAB){ shift = MINLAB - lab; lab = MINLAB; }
+      tk.style.marginLeft = (-shift) + 'px';
+      tk.style.setProperty('--lab', lab + 'px');
+      tk.style.setProperty('--trk', a.width + 'px');
+      tk.classList.add('is-synced');
+    }
+    sync();
+    window.addEventListener('resize', sync);
+    window.addEventListener('load', sync);
+  })();
 
   // ---- keyboard ----
   document.addEventListener('keydown', function(ev){
